@@ -3,14 +3,12 @@ import streamlit as st
 def main():
 	st.title("File Upload Tutorial")
 
-	menu = ["Image","Dataset","DocumentFiles","About"]
-	choice = st.sidebar.selectbox("Menu",menu)
+	data_file = st.file_uploader("Upload CSV",type=["csv"])
 
-	if choice == "Image":
-		st.subheader("Image")
-
-    elif choice == "Dataset":
-		st.subheader("Dataset")
-
-    elif choice == "DocumentFiles":
-		st.subheader("DocumentFiles")
+        if data_file is not None:
+		file_details = {"filename":data_file.name, "filetype":data_file.type,
+                            "filesize":data_file.size}
+		
+		st.write(file_details)
+		df = pd.read_csv(data_file)
+		st.dataframe(df)
